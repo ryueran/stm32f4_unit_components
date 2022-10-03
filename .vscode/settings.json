@@ -1,0 +1,26 @@
+{
+    "files.associations": {
+        "stm32f4xx_hal_msp.h": "c",
+        "stm32f4xx.h": "c",
+        "stm32f4xx_hal.h": "c",
+        "flash_sector_f4.h": "c",
+        "stm32f4xx_hal_flash.h": "c",
+        "stm32f4xx_hal_flash_ex.h": "c",
+        "uart_munipulation.h": "c",
+        "stm32f4xx_hal_def.h": "c",
+        "stm32f4xx_hal_dma.h": "c",
+        "stm32_hal_legacy.h": "c",
+        "stm32f4xx_it.h": "c",
+        "stm32f4xx_hal_uart.h": "c",
+        "freertos.h": "c",
+        "task.h": "c"
+    },
+    "stm32-for-vscode.openOCDPath": false,
+    "stm32-for-vscode.makePath": false,
+
+    "cmake.mingwSearchDirs": [
+        "C:\\VSARM\\mingw\\bin"
+    ],
+    "cmake.generator": "MinGW Makefiles",
+    "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools"
+}

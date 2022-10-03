@@ -1,0 +1,11 @@
+D:/github_repo/stn32_f4_unit/build/CMakeFiles/edit_cache.dir
+D:/github_repo/stn32_f4_unit/build/CMakeFiles/rebuild_cache.dir
+D:/github_repo/stn32_f4_unit/build/Drivers/CMakeFiles/soc_sp.dir
+D:/github_repo/stn32_f4_unit/build/Drivers/CMakeFiles/edit_cache.dir
+D:/github_repo/stn32_f4_unit/build/Drivers/CMakeFiles/rebuild_cache.dir
+D:/github_repo/stn32_f4_unit/build/Src/CMakeFiles/rebuild_cache.dir
+D:/github_repo/stn32_f4_unit/build/Src/CMakeFiles/unit_project.dir
+D:/github_repo/stn32_f4_unit/build/Src/CMakeFiles/edit_cache.dir
+D:/github_repo/stn32_f4_unit/build/Src/HAL_Unit/CMakeFiles/rebuild_cache.dir
+D:/github_repo/stn32_f4_unit/build/Src/HAL_Unit/CMakeFiles/HAL_UNIT.dir
+D:/github_repo/stn32_f4_unit/build/Src/HAL_Unit/CMakeFiles/edit_cache.dir

@@ -13,14 +13,14 @@
         "stm32f4xx_it.h": "c",
         "stm32f4xx_hal_uart.h": "c",
         "freertos.h": "c",
-        "task.h": "c"
+        "task.h": "c",
+        "stm32f410rx.h": "c",
+        "main.h": "c"
     },
     "stm32-for-vscode.openOCDPath": false,
     "stm32-for-vscode.makePath": false,
 
-    "cmake.mingwSearchDirs": [
-        "C:\\VSARM\\mingw\\bin"
-    ],
-    "cmake.generator": "MinGW Makefiles",
+    "cortex-debug.gdbPath": "gdb-multiarch",
+    "cmake.generator": "Unix Makefiles",
     "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools"
 }

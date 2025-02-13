@@ -2,21 +2,25 @@
     // Use IntelliSense to learn about possible attributes.
     // Hover to view descriptions of existing attributes.
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Cortex Debug",
-            "cwd": "${workspaceRoot}",
-            "executable": "${workspaceRoot}/build/Src/unit_project",
-            "request": "launch",
             "type": "cortex-debug",
-            "serverpath":"C:/openocd/OpenOCD-20200503-0.10.0/bin/openocd.exe",
-            "configFiles": [
-                "interface/stlink.cfg",
-                "target/stm32f4x_stlink.cfg"
-            ],
+            "request": "launch",
+            "name": "Debug (OpenOCD)",
             "servertype": "openocd",
-            "armToolchainPath": "C:/gnu/gnu/q4-major/bin",           
+            "cwd": "${workspaceFolder}",
+            "runToEntryPoint": "main",
+            "executable": "./build/Src/unit_project",
+            "device": "STM32F411CEU6",
+            "configFiles": [
+                "interface/stlink-dap.cfg",
+                "target/stm32f4x.cfg"
+            ], 
+            "showDevDebugOutput": "none",
         }
     ]
 }

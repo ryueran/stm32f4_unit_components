@@ -14,6 +14,18 @@ else()
     include(toolchain_target_release.cmake)
 endif (CMAKE_BUILD_TYPE MATCHES "Debug")
 
+# 创建 freertos_config 目标
+add_library(freertos_config INTERFACE)
+target_include_directories(freertos_config SYSTEM INTERFACE ${CMAKE_SOURCE_DIR}/config)
+
+# Set freertos port
+set(FREERTOS_PORT "GCC_ARM_CM4F" CACHE STRING "ARM Cortex-M4 with FPU")
+
+include_directories(
+    Drivers/CMSIS/Device/ST/STM32F4xx/Include
+    Drivers/CMSIS/Core/Include
+    )
 
 add_subdirectory(Drivers)
+add_subdirectory(third_party/FreeRTOS/FreeRTOS/Source)
 add_subdirectory(Src)

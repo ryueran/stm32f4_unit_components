@@ -1,9 +1,11 @@
-#set(CMAKE_C_COMPILER "C:/gnu/gnu/q4-major/bin/arm-none-eabi-gcc.exe")
-#set(CMAKE_ASM_COMPILER "C:/gnu/gnu/q4-major/bin/arm-none-eabi-as.exe")
 SET(ASM_OPTIONS "-x assembler-with-cpp") 
-set(OBJECT_GEN "-mcpu=cortex-m4")
-set(OBJECT_GEN "-mthumb")
-set(CMAKE_C_FLAGS "-s -mcpu=cortex-m4 -mthumb --specs=nosys.specs -pipe -fno-common -ffunction-sections -fdata-sections -mthumb -mno-thumb-interwork -mfpu=vfp -msoft-float")
-set(CMAKE_ASM_FLAGS "-mcpu=cortex-m4 -mthumb")
+
+# 处理 CPU 相关参数
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -s -mcpu=cortex-m4 -mthumb -mfpu=fpv4-sp-d16 -mfloat-abi=softfp")
+set(CMAKE_ASM_FLAGS "${CMAKE_ASM_FLAGS} -mcpu=cortex-m4 -mthumb")
+
 set(LINK_FLAGS "--gc-sections")
-set(CMAKE_EXE_LINKER_FLAGS "-T ${CMAKE_CURRENT_LIST_DIR}/Linker/STM32F411RETx_FLASH.ld")
+# set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} --specs=nosys.specs -T ${CMAKE_CURRENT_LIST_DIR}/Linker/STM32F411RETx_FLASH.ld")
+
+# 可能 nosys.specs 有问题，可以改成 nano.specs
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} --specs=nosys.specs")

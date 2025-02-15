@@ -22,6 +22,9 @@
 #include "main.h"
 #include "uart_manipulation.h"
 /* Private includes ----------------------------------------------------------*/
+#include "FreeRTOS.h"
+#include "task.h"
+#include "stm32f4xx.h"
 /* USER CODE BEGIN Includes */
 DMA_HandleTypeDef hdma_usart2_tx;
 UART_HandleTypeDef huart2;
@@ -61,6 +64,51 @@ void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
 {
   HAL_UART_Transmit_DMA(huart, myTxData, 21);
 }
+
+void vBlinkTask(void *pvParameters) {
+  while (1) {
+    HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5); // 切换 LED 状态
+    vTaskDelay(pdMS_TO_TICKS(500)); // 延迟 500ms
+  }
+}
+
+/* GetIdleTaskMemory prototype (linked to static allocation support) */
+
+void vApplicationGetIdleTaskMemory( StaticTask_t **ppxIdleTaskTCBBuffer, StackType_t **ppxIdleTaskStackBuffer, uint32_t *pulIdleTaskStackSize );
+
+
+/* USER CODE BEGIN GET_IDLE_TASK_MEMORY */
+
+static StaticTask_t xIdleTaskTCBBuffer;
+
+static StackType_t xIdleStack[configMINIMAL_STACK_SIZE];
+
+
+void vApplicationGetIdleTaskMemory( StaticTask_t **ppxIdleTaskTCBBuffer, StackType_t **ppxIdleTaskStackBuffer, uint32_t *pulIdleTaskStackSize )
+
+{
+
+  *ppxIdleTaskTCBBuffer = &xIdleTaskTCBBuffer;
+
+  *ppxIdleTaskStackBuffer = &xIdleStack[0];
+
+  *pulIdleTaskStackSize = configMINIMAL_STACK_SIZE;
+
+  /* place for user code */
+
+}
+
+// 任务栈溢出钩子函数
+void vApplicationStackOverflowHook(TaskHandle_t xTask, char *pcTaskName) {
+  // 这里可以添加错误日志或者其他处理逻辑
+  while (1);  // 死循环防止继续执行
+}
+
+// 内存分配失败钩子函数
+void vApplicationMallocFailedHook(void) {
+  // 这里可以添加错误日志或者其他处理逻辑
+  while (1);  // 死循环防止继续执行
+}
 /* USER CODE END 0 */
 
 /**
@@ -77,6 +125,7 @@ int main(void)
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
+  HAL_NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4);
 
   /* USER CODE BEGIN Init */
 
@@ -99,13 +148,13 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+
+  xTaskCreate(vBlinkTask, "Blink", 256, NULL, 2, NULL);
+  vTaskStartScheduler(); // 启动 FreeRTOS 调度器
+
   while (1)
   {
-    /* USER CODE END WHILE */
-    HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
-    HAL_Delay(500);
-    /* USER CODE BEGIN 3 */
-    UART_Write_Data(&huart2, myTxData, 21);
+
   }
   /* USER CODE END 3 */
 }

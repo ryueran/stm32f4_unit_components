@@ -20,11 +20,15 @@ target_include_directories(freertos_config SYSTEM INTERFACE ${CMAKE_SOURCE_DIR}/
 
 # Set freertos port
 set(FREERTOS_PORT "GCC_ARM_CM4F" CACHE STRING "ARM Cortex-M4 with FPU")
+set(FREERTOS_HEAP "4" CACHE STRING "" FORCE)
 
 include_directories(
     Drivers/CMSIS/Device/ST/STM32F4xx/Include
     Drivers/CMSIS/Core/Include
-    )
+    third_party/FreeRTOS/FreeRTOS/Source/include
+    config
+    third_party/FreeRTOS/FreeRTOS/Source/portable/GCC/ARM_CM4F
+)
 
 add_subdirectory(Drivers)
 add_subdirectory(third_party/FreeRTOS/FreeRTOS/Source)

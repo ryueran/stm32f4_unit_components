@@ -25,6 +25,9 @@
 #include "FreeRTOS.h"
 #include "task.h"
 #include "stm32f4xx.h"
+
+#define BLINK_TASK_STACK_SIZE 128
+#define DUMMY_TASK_STACK_SIZE 128
 /* USER CODE BEGIN Includes */
 DMA_HandleTypeDef hdma_usart2_tx;
 UART_HandleTypeDef huart2;
@@ -51,6 +54,12 @@ uint8_t myTxData[21] = "start application \r\n";
 
 /* USER CODE END PV */
 
+/* Task Control Blocks and Stack */
+StaticTask_t xBlinkTaskTCB;
+StackType_t xBlinkStack[BLINK_TASK_STACK_SIZE];
+StaticTask_t xDummyTaskTCB;
+StackType_t xDummyStack[DUMMY_TASK_STACK_SIZE];
+
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
@@ -66,9 +75,16 @@ void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
 }
 
 void vBlinkTask(void *pvParameters) {
-  while (1) {
+  for (;;) {
     HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5); // 切换 LED 状态
-    vTaskDelay(pdMS_TO_TICKS(500)); // 延迟 500ms
+    vTaskDelay(1); // 延迟 500ms
+  }
+}
+
+void vDummyTask(void *pvParameters) {
+  while (1) {
+      // printf("Dummy Task Running\n");
+      vTaskDelay(pdMS_TO_TICKS(1000));
   }
 }
 
@@ -125,8 +141,7 @@ int main(void)
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
-  HAL_NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4);
-
+  // HAL_NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4);
   /* USER CODE BEGIN Init */
 
   /* USER CODE END Init */
@@ -136,8 +151,8 @@ int main(void)
 
   /* USER CODE BEGIN SysInit */
   MX_GPIO_Init();
-  UART_DMA_Init(&hdma_usart2_tx, &huart2);
-  UART_Init(&huart2);
+  // UART_DMA_Init(&hdma_usart2_tx, &huart2);
+  // UART_Init(&huart2);
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
@@ -149,7 +164,10 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
 
-  xTaskCreate(vBlinkTask, "Blink", 256, NULL, 2, NULL);
+  /* Create tasks using static allocation */
+  xTaskCreateStatic(vBlinkTask, "Blink", BLINK_TASK_STACK_SIZE, NULL, 1, xBlinkStack, &xBlinkTaskTCB);
+  // xTaskCreateStatic(vDummyTask, "Dummy", DUMMY_TASK_STACK_SIZE, NULL, 0, xDummyStack, &xDummyTaskTCB);
+
   vTaskStartScheduler(); // 启动 FreeRTOS 调度器
 
   while (1)

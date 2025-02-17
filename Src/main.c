@@ -77,14 +77,14 @@ void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
 void vBlinkTask(void *pvParameters) {
   for (;;) {
     HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5); // 切换 LED 状态
-    vTaskDelay(1); // 延迟 500ms
+    vTaskDelay(pdMS_TO_TICKS(1000)); // 延迟 500ms
   }
 }
 
 void vDummyTask(void *pvParameters) {
   while (1) {
-      // printf("Dummy Task Running\n");
-      vTaskDelay(pdMS_TO_TICKS(1000));
+    printf("Dummy Task Running\n");
+    vTaskDelay(pdMS_TO_TICKS(1000));
   }
 }
 
@@ -166,7 +166,7 @@ int main(void)
 
   /* Create tasks using static allocation */
   xTaskCreateStatic(vBlinkTask, "Blink", BLINK_TASK_STACK_SIZE, NULL, 1, xBlinkStack, &xBlinkTaskTCB);
-  // xTaskCreateStatic(vDummyTask, "Dummy", DUMMY_TASK_STACK_SIZE, NULL, 0, xDummyStack, &xDummyTaskTCB);
+  xTaskCreateStatic(vDummyTask, "Dummy", DUMMY_TASK_STACK_SIZE, NULL, 0, xDummyStack, &xDummyTaskTCB);
 
   vTaskStartScheduler(); // 启动 FreeRTOS 调度器
 

@@ -7,12 +7,12 @@ set(CMAKE_CXX_STANDARD 11)
 
 target_sources(HAL_UNIT
 PUBLIC
-    ${CMAKE_CURRENT_SOURCE_DIR}/uart_manipulation.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/UART/uart_manipulation.c
 )
 
 target_include_directories(HAL_UNIT
 PUBLIC
-    ${CMAKE_CURRENT_SOURCE_DIR}
+    ${CMAKE_CURRENT_SOURCE_DIR}/UART
     ../../Drivers/HAL/Inc
     ../../Drivers/CMSIS/Device/ST/STM32F0xx/Include
     ../../Drivers/CMSIS/Include

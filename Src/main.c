@@ -21,6 +21,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "uart_manipulation.h"
+#include "uart_instance.h"
 /* Private includes ----------------------------------------------------------*/
 #include "FreeRTOS.h"
 #include "task.h"
@@ -85,7 +86,7 @@ void vBlinkTask(void *pvParameters) {
 void vDummyTask(void *pvParameters) {
   while (1) {
     UNUSED(pvParameters);
-    UART_Write_Data(&huart2, myTxData, sizeof(myTxData));
+    uart2_instance.write(&huart2, myTxData, sizeof(myTxData));
     vTaskDelay(pdMS_TO_TICKS(1000));
   }
 }
@@ -136,7 +137,6 @@ void vApplicationMallocFailedHook(void) {
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -153,8 +153,8 @@ int main(void)
 
   /* USER CODE BEGIN SysInit */
   MX_GPIO_Init();
-  UART_DMA_Init(&hdma_usart2_tx, &huart2);
-  UART_Init(&huart2);
+  uart2_instance.dma_init(&hdma_usart2_tx, &huart2);
+  uart2_instance.uart_init(&huart2);
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */

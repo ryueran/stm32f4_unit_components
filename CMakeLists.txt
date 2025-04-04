@@ -6,6 +6,8 @@ message(STATUS "Building for TARGET")
 project(stm32f4_unit LANGUAGES C ASM)
 set(CMAKE_EXE_LINKER_FLAGS "-T ${CMAKE_CURRENT_LIST_DIR}/Linker/STM32F411RETx_FLASH.ld")
 
+add_compile_options(-Wall -Wextra -Werror)
+
 if (CMAKE_BUILD_TYPE MATCHES "Debug")
     message("-- debug mode")
     include(toolchain_target_debug.cmake)

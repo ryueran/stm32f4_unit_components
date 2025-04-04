@@ -362,6 +362,10 @@ void HAL_PWR_DisableWakeUpPin(uint32_t WakeUpPinx)
   *            @arg PWR_SLEEPENTRY_WFE: enter SLEEP mode with WFE instruction
   * @retval None
   */
+
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-parameter"
+
 void HAL_PWR_EnterSLEEPMode(uint32_t Regulator, uint8_t SLEEPEntry)
 {
   /* Check the parameters */
@@ -385,6 +389,8 @@ void HAL_PWR_EnterSLEEPMode(uint32_t Regulator, uint8_t SLEEPEntry)
     __WFE();
   }
 }
+
+#pragma GCC diagnostic pop
 
 /**
   * @brief Enters Stop mode. 

@@ -7,6 +7,7 @@
 #include "stm32f4xx_hal_dma.h"
 #include "stm32f4xx_hal_uart.h"
 #include "stm32f4xx_hal_usart.h"
+#include "stm32f4xx_hal_cortex.h"
 
 void UART_Write_Data(UART_HandleTypeDef * huart, uint8_t *buf, int size);
 void UART_Init(UART_HandleTypeDef *huart);

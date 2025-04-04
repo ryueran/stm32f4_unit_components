@@ -76,6 +76,7 @@ void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
 
 void vBlinkTask(void *pvParameters) {
   for (;;) {
+    UNUSED(pvParameters);
     HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5); // 切换 LED 状态
     vTaskDelay(pdMS_TO_TICKS(1000)); // 延迟 500ms
   }
@@ -83,6 +84,7 @@ void vBlinkTask(void *pvParameters) {
 
 void vDummyTask(void *pvParameters) {
   while (1) {
+    UNUSED(pvParameters);
     UART_Write_Data(&huart2, myTxData, sizeof(myTxData));
     vTaskDelay(pdMS_TO_TICKS(1000));
   }
@@ -115,7 +117,7 @@ void vApplicationGetIdleTaskMemory( StaticTask_t **ppxIdleTaskTCBBuffer, StackTy
 }
 
 // 任务栈溢出钩子函数
-void vApplicationStackOverflowHook(TaskHandle_t xTask, char *pcTaskName) {
+void vApplicationStackOverflowHook(void) {
   // 这里可以添加错误日志或者其他处理逻辑
   while (1);  // 死循环防止继续执行
 }

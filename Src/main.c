@@ -76,7 +76,7 @@ void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
 }
 
 void vBlinkTask(void *pvParameters) {
-  for (;;) {
+  while (1) {
     UNUSED(pvParameters);
     HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5); // 切换 LED 状态
     vTaskDelay(pdMS_TO_TICKS(1000)); // 延迟 500ms

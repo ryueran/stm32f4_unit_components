@@ -1,0 +1,38 @@
+1. Memory Devices
+SRAM: data deleted after power off
+ROM: data saved after power off
+
+Function differences
+----------------------------------------------------
+           |SRAM                |ROM
+----------------------------------------------------
+Usage      |Uninitialized global|Firmware,
+           |variables           |read only global
+           |(.bss section)      |
+           |and static variables|
+           |heap, stack         |
+----------------------------------------------------
+
+Collaboration in the Cortex-M startup process:
+
+Reset startup
+The CPU reads the initial value of the stack pointer (SP) from the 0x20020000 address of the ROM,
+and then reads the reset vector (Reset Handler address) from 0x00000004.
+Execute the Reset Handler code to initialize the hardware (clock, peripherals, etc.).
+Data initialization
+Copy the .data section (initialized global variables) in the ROM to the SRAM.
+Clear the .bss section (uninitialized global variables) in the SRAM.
+Program execution
+The CPU reads instructions from the ROM one by one,
+and uses the SRAM to process dynamic data (such as function calls, variable modifications).
+
+2. Bit-Band Operation (remapping)
+There are two sections in memory allows bit-band operation:
+0x20000000 ~ 0x200FFFFF(SRAM, 1MB)
+0x40000000 ~ 0x400FFFFF(Peripherals, 1MB)
+
+.  SRAM original section base address：0x20000000
+
+.  Peripherals original section base address：0x40000000
+
+Remapping formular: alias_addr=bit_band_base+(byte_offset×32)+bit_offset

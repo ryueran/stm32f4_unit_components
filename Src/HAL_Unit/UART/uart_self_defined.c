@@ -16,7 +16,6 @@ void UART_Self_Receive(uint8_t *pData, uint16_t Size)
 
 void UART_Self_Transmit(uint8_t *pData, uint16_t Size)
 {
-    // 简单的阻塞式发送函数
     for (uint16_t i = 0; i < Size; i++) {
         uint16_t next = (tx_head + 1) % TX_BUF_SIZE;
         while (next == tx_tail) {

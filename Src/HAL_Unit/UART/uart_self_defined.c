@@ -96,7 +96,10 @@ void UART_Self_Init(void)
 
     // 使能 TX, RX, USART, 以及接收中断
     USART2->CR1 = 0;
+    USART2->CR1 |= USART_CR1_M; // 9位数据位
     USART2->CR1 |= USART_CR1_TE | USART_CR1_RE | USART_CR1_UE | USART_CR1_RXNEIE | USART_CR1_TXEIE;
+    USART2->CR1 |= USART_CR1_PCE;
+    USART2->CR1 |= USART_CR1_PS; // 奇校验
 
     // NVIC 配置00
     NVIC_SetPriority(USART2_IRQn, 5);
